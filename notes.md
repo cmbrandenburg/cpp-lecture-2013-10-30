@@ -170,8 +170,84 @@ destructed.
 
 ## Examples
 
-
 ### An internal error: `class mutex`
 
+(begin notes)
+
+Use [mutex-1.cpp](mutex-1.cpp) to show an example of a throwing destructor
+in a class that wraps a resource.
+
+Q: How do we solve the problem of the throwing destructor?
+
+Some possible answers:
+- Ignore the error. Don't throw.
+- Add `noexcept(false)` specifier and let caller be warned.
+- Call `unlock()` before destructing mutex.
+
+A: Call `unlock()` before destructing mutex.
+
+(end notes)
+
+The `pthread_mutex_destroy()` function fails for two reasons: `EBUSY` and
+`EINVAL`. These are both examples of logic errors: errors internal to the
+program that the programmer has complete control over. The straightforward fix
+is not to make such a mistake.
+
+(begin notes)
+
+Show how [mutex-2.cpp](mutex-2.cpp) solves the problem.
+
+(end notes)
+
 ### An external error: `class file`
+
+Not all cleanup errors are logic errors. Sometimes cleanup fails for external
+reasons: these are environmental problems that the programmer has no control
+over and thus must anticipate and deal with. One example of such an error is
+when closing a file descriptor.
+
+In addition to the usual logic errors that could lead to `EBADF`, the `close()`
+function may fail because of an I/O error—`EIO`. From the `close(2)` manpage:
+
+> Not  checking  the  return value of close() is a common but nevertheless
+> serious programming error.  It is quite possible that errors on a previous
+> write(2) operation are first reported at the final close().  Not checking the
+> return value when closing the file may lead to silent loss of data.  This can
+> especially be observed with NFS and with disk quota.
+
+(begin notes)
+
+Show how [file_io-2.cpp](file_io-2.cpp) can lead to an I/O error during
+`fclose()`. Use a virtual machine with an sshfs file system to simulate a
+network disconnection before the file flushes output.
+
+Q: How do we solve the problem of the throwing destructor?
+
+Some possible answers:
+- Ignore the error. Don't throw.
+- Add `noexcept(false)` specifier and let caller be warned.
+- Add a `close()` function and call it before destructing the file.
+
+A: Add a `close()' function and let the caller be warned.
+
+Some opinions:
+- It's a bug to pretend the file descriptor closed when it didn't. A destructor
+	that fails should throw.
+- However, it's a mistake to force the class's caller to deal with possible
+	termination. Thus, add an explicit `close()` function to let the caller handle
+	errors outside of the destructor.
+- But so long as the close operation fails, then the destructor probably will
+	too. This forces the caller to keep the file instance in scope until the close
+	operation succeeds. Annoying, but correct.
+- Or, of course, the caller may allow things to fail.
+
+Mention "crash-only design". If you must spend time and effort making your
+program crash-recoverable, then maybe crashing because `close()` fails is the
+best thing to do--better than all the extra complexity of handling the error.
+
+
+Show [file_io-1.cpp](file_io-1.cpp) as an example of how the close error is not
+handled correctly in Python3.
+
+(end notes)
 
