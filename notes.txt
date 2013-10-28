@@ -1,6 +1,0 @@
-throwing exceptions out of a destructor
-http://stackoverflow.com/questions/130117/throwing-exceptions-out-of-a-destructor
-
-Exception thrown from destructor
-http://software.intel.com/sites/products/documentation/doclib/iss/2013/sa-ptr/sa-ptr_win_lin/GUID-D2983B74-74E9-4868-90E0-D65A80F8F69F.htm
-

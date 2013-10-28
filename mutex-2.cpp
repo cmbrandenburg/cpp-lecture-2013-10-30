@@ -1,3 +1,5 @@
+// vim: set noet ts=2 sw=2:
+
 #include <cstring>
 #include <pthread.h>
 #include <sstream>

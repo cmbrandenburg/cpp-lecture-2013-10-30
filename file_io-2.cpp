@@ -1,3 +1,5 @@
+// vim: set noet ts=2 sw=2:
+
 #include <cstring>
 #include <errno.h>
 #include <fcntl.h>

@@ -11,3 +11,12 @@
 *.lai
 *.la
 *.a
+
+# makefile targets:
+file_io-2
+mutex-1
+mutex-2
+notes.html
+terminate-c++03
+terminate-c++11
+
