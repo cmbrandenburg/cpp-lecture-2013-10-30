@@ -27,11 +27,6 @@ public:
 		}
 	}
 
-	mutex(mutex const &) = delete;
-	mutex(mutex &&) = default;
-	mutex &operator=(mutex const &) = delete;
-	mutex &operator=(mutex &&) = default;
-
 	void lock() {
 		int n = ::pthread_mutex_lock(&m);
 		if (n) {

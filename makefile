@@ -4,7 +4,8 @@ CXXFLAGS_CPP03 := $(CXXFLAGS) -std=c++03
 CXXFLAGS_CPP11 := $(CXXFLAGS) -std=c++11
 
 CPP_TARGETS := \
-	file_io-2 \
+	io-1 \
+	io-2 \
 	mutex-1 \
 	mutex-2
 

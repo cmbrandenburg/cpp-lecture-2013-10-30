@@ -13,7 +13,8 @@
 *.a
 
 # makefile targets:
-file_io-2
+io-1
+io-2
 mutex-1
 mutex-2
 notes.html
