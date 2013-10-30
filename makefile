@@ -8,7 +8,8 @@ CPP_TARGETS := \
 	io-1 \
 	io-2 \
 	mutex-1 \
-	mutex-2
+	mutex-2 \
+	$(basename $(wildcard work*.cpp))
 
 MD_TARGETS := \
 	notes.html
