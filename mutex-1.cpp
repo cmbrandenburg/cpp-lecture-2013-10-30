@@ -50,6 +50,7 @@ public:
 int main() {
 	mutex x;
 	x.lock();
+	// The mutex is locked and therefore in a non-destructible state.
 	return 0;
 }
 

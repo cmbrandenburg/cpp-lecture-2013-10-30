@@ -49,6 +49,9 @@ public:
 
 int main() {
 	mutex x;
+	x.lock();
+	x.unlock();
+	// The mutex is unlocked and therefore in a destructible state.
 	return 0;
 }
 
